@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>තොරතුරු පත්‍රිකාව</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+   integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+   crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+   integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+   crossorigin=""></script>
+</head>
+<body>
+  <h1>තොරතුරු ඇතුලත් කරන්න</h1>
+
+  <form id="myForm">
+    <label for="name">නම:</label><br>
+    <input type="text" id="name" name="name"><br><br>
+
+    <label for="address">ලිපිනය:</label><br>
+    <input type="text" id="address" name="address"><br><br>
+
+    <label for="description">විස්තරය:</label><br>
+    <textarea id="description" name="description"></textarea><br><br>
+
+    <label for="phone">දුරකථන අංකය:</label><br>
+    <input type="text" id="phone" name="phone"><br><br>
+
+    <label for="location">ස්ථානය:</label><br>
+    <div id="map"></div>
+    <button type="button" id="getLocationBtn">ස්ථානය ලබාගන්න</button><br><br>
+
+    <label for="latitudeBox">අක්ෂාංශ (Latitude):</label><br>
+    <input type="text" id="latitudeBox" name="latitudeBox" readonly><br><br>
+
+    <label for="longitudeBox">දේශාංශ (Longitude):</label><br>
+    <input type="text" id="longitudeBox" name="longitudeBox" readonly><br><br>
+     <input type="hidden" id="latitude" name="latitude">
+    <input type="hidden" id="longitude" name="longitude">
+
+
+    <button type="submit">යවන්න</button>
+  </form>
+
+    <script src="script.js"></script>
+</body>
+</html>
