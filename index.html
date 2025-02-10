@@ -1,48 +1,78 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>තොරතුරු පත්‍රිකාව</title>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-   integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-   crossorigin=""/>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-   integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-   crossorigin=""></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Information Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+
 </head>
-<body>
-  <h1>තොරතුරු ඇතුලත් කරන්න</h1>
+<body class="bg-gray-100 font-sans">
+    <div class="container mx-auto p-4">
+        <h1 class="text-2xl font-semibold text-center mb-6">Enter Information</h1>
 
-  <form id="myForm">
-    <label for="name">නම:</label><br>
-    <input type="text" id="name" name="name"><br><br>
+        <form id="myForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <div class="mb-4">
+                <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name:</label>
+                <input type="text" id="name" name="name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" aria-describedby="nameHelp">
+                <p id="nameHelp" class="text-xs italic text-gray-500">Please enter your full name.</p>
+            </div>
 
-    <label for="address">ලිපිනය:</label><br>
-    <input type="text" id="address" name="address"><br><br>
+            <div class="mb-4">
+                <label for="address" class="block text-gray-700 text-sm font-bold mb-2">Address:</label>
+                <input type="text" id="address" name="address" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
 
-    <label for="description">විස්තරය:</label><br>
-    <textarea id="description" name="description"></textarea><br><br>
+            <div class="mb-4">
+                <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Description:</label>
+                <textarea id="description" name="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none" rows="3"></textarea>
+            </div>
 
-    <label for="phone">දුරකථන අංකය:</label><br>
-    <input type="text" id="phone" name="phone"><br><br>
+            <div class="mb-4">
+                <label for="phone" class="block text-gray-700 text-sm font-bold mb-2">Phone Number:</label>
+                <input type="text" id="phone" name="phone" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
 
-    <label for="location">ස්ථානය:</label><br>
-    <div id="map"></div>
-    <button type="button" id="getLocationBtn">ස්ථානය ලබාගන්න</button><br><br>
+            <div class="mb-4">
+                <label for="location" class="block text-gray-700 text-sm font-bold mb-2">Location:</label>
+                <div id="map" class="h-64 w-full rounded border border-gray-300">
+                    <div id="layerControl" class="leaflet-control-layers leaflet-control"></div>
+                </div>
 
-    <label for="latitudeBox">අක්ෂාංශ (Latitude):</label><br>
-    <input type="text" id="latitudeBox" name="latitudeBox" readonly><br><br>
+                <button type="button" id="getLocationBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 mt-2">
+                   <i class="fas fa-location-arrow mr-2"></i> Get Location
+                </button>
+                <p id="locationStatus" class="text-sm text-gray-500 mt-2"></p>
+            </div>
 
-    <label for="longitudeBox">දේශාංශ (Longitude):</label><br>
-    <input type="text" id="longitudeBox" name="longitudeBox" readonly><br><br>
-     <input type="hidden" id="latitude" name="latitude">
-    <input type="hidden" id="longitude" name="longitude">
+             <div class="mb-4">
+                <label for="latitudeBox" class="block text-gray-700 text-sm font-bold mb-2">Latitude:</label>
+                <input type="text" id="latitudeBox" name="latitudeBox" readonly class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-100">
+            </div>
 
+             <div class="mb-4">
+                <label for="longitudeBox" class="block text-gray-700 text-sm font-bold mb-2">Longitude:</label>
+                <input type="text" id="longitudeBox" name="longitudeBox" readonly class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-100">
+            </div>
 
-    <button type="submit">යවන්න</button>
-  </form>
+            <input type="hidden" id="latitude" name="latitude">
+            <input type="hidden" id="longitude" name="longitude">
 
-    <script src="script.js"></script>
+            <div class="flex items-center justify-between">
+                <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">
+                   <i class="fas fa-paper-plane mr-2"></i> Submit
+                </button>
+                 <button type="button" id="viewOnMapBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <i class="fas fa-map-marked-alt mr-2"></i> View on Map
+                </button>
+
+            </div>
+        </form>
+    </div>
+     <script src="script.js"></script>
 </body>
 </html>
