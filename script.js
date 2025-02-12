@@ -22,7 +22,7 @@ const baseMaps = {
   "Satellite": esriSatelliteLayer
 };
 
-// Check if baseMaps has any layers before adding the control.
+// Check if baseMaps has any layers before adding the control.  Important!
 if (Object.keys(baseMaps).length > 0) {
 L.control.layers(baseMaps).addTo(map);
 } else {
@@ -113,7 +113,45 @@ switch(error.code) {
 // Add event listener to the "Get Location" button
 document.getElementById("getLocationBtn").addEventListener("click", getLocation);
 
-// Form submission handling (example - replace with your actual submission logic)
+// --- Search Functionality (Nominatim) ---
+
+document.getElementById("searchBtn").addEventListener("click", function() {
+  const searchText = document.getElementById("searchInput").value;
+  if (searchText) {
+      searchLocation(searchText);
+  } else {
+      alert("Please enter a place to search for.");
+  }
+});
+
+function searchLocation(query) {
+  const nominatimUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1`;
+
+   fetch(nominatimUrl)
+      .then(response => {
+          if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+      })
+      .then(data => {
+          if (data.length > 0) {
+              const lat = parseFloat(data[0].lat);
+              const lng = parseFloat(data[0].lon);
+              marker.setLatLng([lat, lng]);
+              map.setView([lat, lng], 15);  //Zoom level
+              updateLocation(lat, lng);
+          } else {
+              alert("No results found for your search query.");
+          }
+      })
+      .catch(error => {
+          console.error("Error searching for location:", error);
+          alert("Error searching for location. See console for details.");
+      });
+}
+
+// Form submission handling
 document.getElementById("myForm").addEventListener("submit", function(event) {
 event.preventDefault(); // Prevent default form submission
 
