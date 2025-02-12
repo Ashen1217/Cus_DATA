@@ -1,8 +1,21 @@
 /* style.css */
 
-/* Very minimal custom CSS - rely on Tailwind */
-
+/* Keep this very minimal - Tailwind handles almost everything */
+body {
+  font-family: 'Inter', sans-serif; /* Use Inter font */
+}
 #map {
-  min-height: 300px; /* Ensure map has a minimum height */
-  width: 100%;      /* Ensure map takes full width */
+  /*  The map *needs* a defined height, otherwise it won't display */
+  min-height: 300px; /* Minimum height */
+  width: 100%;       /* Full width */
+}
+
+/* Loading spinner (for Get Location button) */
+.fa-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
