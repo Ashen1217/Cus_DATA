@@ -9,7 +9,6 @@ const esriSatelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/r
   attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 });
 
-
 // Initialize the map (Leaflet) - Esri Satellite is the default layer
 const map = L.map('map', {
 center: [7.8731, 80.7718], // Default center
@@ -23,23 +22,21 @@ const baseMaps = {
   "Satellite": esriSatelliteLayer
 };
 
-// Check if baseMaps has any layers before adding the control
+// Check if baseMaps has any layers before adding the control.
 if (Object.keys(baseMaps).length > 0) {
 L.control.layers(baseMaps).addTo(map);
 } else {
 console.error("No base layers defined for the layer control.");
 }
 
-
 // Create a draggable marker
 const marker = L.marker([7.8731, 80.7718], {draggable: true}).addTo(map);
 
-// Function to update both hidden inputs and text boxes
+// Function to update BOTH hidden inputs AND the combined locationInfo text box
 function updateLocation(lat, lng) {
   document.getElementById('latitude').value = lat;
   document.getElementById('longitude').value = lng;
-  document.getElementById('latitudeBox').value = lat.toFixed(6);
-  document.getElementById('longitudeBox').value = lng.toFixed(6);
+  document.getElementById('locationInfo').value = `${lat.toFixed(6)}, ${lng.toFixed(6)}`; // Combined format
 }
 
 // Update location when the marker is dragged
@@ -85,7 +82,8 @@ const lng = position.coords.longitude;
 marker.setLatLng([lat, lng]); // Update marker position
 map.setView([lat, lng], 15);   // Center map on new location and zoom in
 
-updateLocation(lat, lng);      // Update form fields
+updateLocation(lat, lng);      // Update BOTH hidden inputs and the combined text box
+
 document.getElementById('locationStatus').textContent = ''; // Clear status message
 console.log("GPS Location:", lat, lng);
 }
@@ -115,7 +113,7 @@ switch(error.code) {
 // Add event listener to the "Get Location" button
 document.getElementById("getLocationBtn").addEventListener("click", getLocation);
 
-// Handle form submission
+// Form submission handling (example - replace with your actual submission logic)
 document.getElementById("myForm").addEventListener("submit", function(event) {
 event.preventDefault(); // Prevent default form submission
 
@@ -141,8 +139,10 @@ alert("Data submitted successfully!");
 
 // "View on Map" button functionality (opens Google Maps)
 document.getElementById("viewOnMapBtn").addEventListener("click", function() {
-const latitude = document.getElementById('latitudeBox').value;
-const longitude = document.getElementById('longitudeBox').value;
+  // Use the combined locationInfo text box value
+  const locationInfo = document.getElementById('locationInfo').value;
+  const [latitude, longitude] = locationInfo.split(',').map(s => s.trim());
+
 
 if (latitude && longitude) {
   const url = "https://www.google.com/maps/search/?api=1&query=" + latitude + "," + longitude;
